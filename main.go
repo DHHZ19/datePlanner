@@ -41,8 +41,8 @@ func main() {
 		"locationRestriction": {
 		  "circle": {
 			"center": {
-			  "latitude":  44.8693646,
-			  "longitude": -93.2652877
+			  "latitude":  value should be here,
+			  "longitude": value should be here
 			},
 			"radius": 1000.0
 		  }
