@@ -50,8 +50,9 @@ func main() {
 		if err != nil {
 			log.Fatalf("fatal error: %s", err)
 		}
+
 		r := &maps.GeolocationRequest{ConsiderIP: true}
-		// result := &maps.GeolocationResult{}
+
 		route, err := z.Geolocate(context.Background(), r)
 		if err != nil {
 			log.Fatalf("fatal error: %s", err)
