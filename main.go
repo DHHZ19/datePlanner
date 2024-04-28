@@ -2,8 +2,6 @@ package main
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
 	"net/http"
 	"os"
 
@@ -61,7 +59,7 @@ func main() {
 
 		s := &maps.NearbySearchRequest{Location: &route.Location, Radius: 5000, Type: "restaurant"}
 
-		ts := &maps.TextSearchRequest{Query: "mexican_restaurants", Location: &route.Location, Radius: 4000}
+		ts := &maps.TextSearchRequest{Query: "asian_restaurants", Location: &route.Location, Radius: 4000}
 
 		t, err := z.TextSearch(context.Background(), ts)
 		if err != nil {
@@ -74,11 +72,11 @@ func main() {
 
 		pretty.Println(quess)
 		pretty.Println(t)
-		jsondata, _ := json.Marshal(t) // Example Json Data:=> {"Name":"rahul","Age":12}
+		// jsondata, _ := json.Marshal(t) // Example Json Data:=> {"Name":"rahul","Age":12}
 
-		fmt.Println(string(jsondata)) // Marshal Data:=> [123 34 78 97 109 101 34 58 34 114 97 104 117 108 34 44 34 65 103 101 34 58 49 50 125]
+		// fmt.Println(string(jsondata)) // Marshal Data:=> [123 34 78 97 109 101 34 58 34 114 97 104 117 108 34 44 34 65 103 101 34 58 49 50 125]
 
-		return c.JSONBlob(http.StatusOK, jsondata)
+		return c.JSON(http.StatusOK, t)
 
 	})
 
