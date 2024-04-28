@@ -65,6 +65,7 @@ func main() {
 		if err != nil {
 			log.Error(err)
 		}
+
 		quess, err := z.NearbySearch(context.Background(), s)
 		if err != nil {
 			log.Error(err)
