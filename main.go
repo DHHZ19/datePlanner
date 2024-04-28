@@ -46,10 +46,10 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 
 		z, err := maps.NewClient(maps.WithAPIKey(key))
-
 		if err != nil {
 			log.Fatalf("fatal error: %s", err)
 		}
+
 		r := &maps.GeolocationRequest{ConsiderIP: true}
 
 		route, err := z.Geolocate(context.Background(), r)
@@ -81,7 +81,6 @@ func main() {
 		name := c.QueryParam("name")
 
 		z, err := maps.NewClient(maps.WithAPIKey(key))
-
 		if err != nil {
 			panic(err)
 		}
@@ -89,7 +88,6 @@ func main() {
 		r := &maps.GeolocationRequest{ConsiderIP: true}
 
 		route, err := z.Geolocate(context.Background(), r)
-
 		if err != nil {
 			log.Fatalf("fatal error: %s", err)
 		}
@@ -97,7 +95,6 @@ func main() {
 		ts := &maps.TextSearchRequest{Query: name, Location: &route.Location, Radius: 3000}
 
 		t, err := z.TextSearch(context.Background(), ts)
-
 		if err != nil {
 			log.Error(err)
 		}
