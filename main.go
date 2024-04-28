@@ -85,16 +85,19 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+
 		r := &maps.GeolocationRequest{ConsiderIP: true}
 
 		route, err := z.Geolocate(context.Background(), r)
+
 		if err != nil {
 			log.Fatalf("fatal error: %s", err)
 		}
 
-		ts := &maps.TextSearchRequest{Query: name, Location: &route.Location, Radius: 4000}
+		ts := &maps.TextSearchRequest{Query: name, Location: &route.Location, Radius: 3000}
 
 		t, err := z.TextSearch(context.Background(), ts)
+
 		if err != nil {
 			log.Error(err)
 		}
