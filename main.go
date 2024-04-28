@@ -72,12 +72,34 @@ func main() {
 
 		pretty.Println(quess)
 		pretty.Println(t)
-		// jsondata, _ := json.Marshal(t) // Example Json Data:=> {"Name":"rahul","Age":12}
-
-		// fmt.Println(string(jsondata)) // Marshal Data:=> [123 34 78 97 109 101 34 58 34 114 97 104 117 108 34 44 34 65 103 101 34 58 49 50 125]
 
 		return c.JSON(http.StatusOK, t)
 
+	})
+
+	e.GET("/search", func(c echo.Context) error {
+		name := c.QueryParam("name")
+
+		z, err := maps.NewClient(maps.WithAPIKey(key))
+
+		if err != nil {
+			panic(err)
+		}
+		r := &maps.GeolocationRequest{ConsiderIP: true}
+
+		route, err := z.Geolocate(context.Background(), r)
+		if err != nil {
+			log.Fatalf("fatal error: %s", err)
+		}
+
+		ts := &maps.TextSearchRequest{Query: name, Location: &route.Location, Radius: 4000}
+
+		t, err := z.TextSearch(context.Background(), ts)
+		if err != nil {
+			log.Error(err)
+		}
+
+		return c.JSON(http.StatusOK, t)
 	})
 
 	e.Logger.Fatal(e.Start(":1235"))
