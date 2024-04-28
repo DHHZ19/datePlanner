@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 
@@ -50,7 +52,6 @@ func main() {
 		if err != nil {
 			log.Fatalf("fatal error: %s", err)
 		}
-
 		r := &maps.GeolocationRequest{ConsiderIP: true}
 
 		route, err := z.Geolocate(context.Background(), r)
@@ -58,18 +59,29 @@ func main() {
 			log.Fatalf("fatal error: %s", err)
 		}
 
-		// request, err := http.NewRequest("POST", "https://places.googleapis.com/v1/places:searchNearby", bytes.NewBuffer(jsonData))
-		s := &maps.NearbySearchRequest{Location: &route.Location, Radius: 20000, Type: "library"}
+		s := &maps.NearbySearchRequest{Location: &route.Location, Radius: 5000, Type: "restaurant"}
+
+		ts := &maps.TextSearchRequest{Query: "mexican_restaurants", Location: &route.Location, Radius: 4000}
+
+		t, err := z.TextSearch(context.Background(), ts)
+		if err != nil {
+			log.Error(err)
+		}
 		quess, err := z.NearbySearch(context.Background(), s)
 		if err != nil {
 			log.Error(err)
 		}
 
 		pretty.Println(quess)
+		pretty.Println(t)
+		jsondata, _ := json.Marshal(t) // Example Json Data:=> {"Name":"rahul","Age":12}
 
-		return c.String(http.StatusOK, string("quess.Results[0].Types[0]"))
+		fmt.Println(string(jsondata)) // Marshal Data:=> [123 34 78 97 109 101 34 58 34 114 97 104 117 108 34 44 34 65 103 101 34 58 49 50 125]
+
+		return c.JSONBlob(http.StatusOK, jsondata)
 
 	})
-	e.Logger.Fatal(e.Start(":1234"))
+
+	e.Logger.Fatal(e.Start(":1235"))
 
 }

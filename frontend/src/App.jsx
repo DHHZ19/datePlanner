@@ -6,9 +6,10 @@ function App() {
   useEffect (() => {
   
       async function fetchData() {
-        const response = await fetch("http://localhost:1234/");
+        const response = await fetch("http://localhost:1235/");
         const data = await response.json()
-        setCount(data.places[0].formattedAddress)
+
+        setCount(JSON.stringify(data))
       }
 
       fetchData() 
@@ -22,7 +23,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        {count}
+        {count.results}
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
