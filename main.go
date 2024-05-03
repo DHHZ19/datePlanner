@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"context"
+	"image/jpeg"
 	"net/http"
 	"os"
 
@@ -100,7 +102,24 @@ func main() {
 			log.Error(err)
 		}
 
-		return c.JSON(http.StatusOK, t)
+		p := &maps.PlacePhotoRequest{PhotoReference: t.Results[0].Photos[0].PhotoReference, MaxHeight: 200, MaxWidth: 200}
+
+		photo, err := z.PlacePhoto(context.Background(), p)
+		if err != nil {
+			log.Fatalf("Fatal Error: %s", err)
+		}
+
+		img, err := photo.Image()
+		if err != nil {
+			log.Fatalf("Fatal Error: %s", err)
+		}
+
+		buffer := new(bytes.Buffer)
+		if err := jpeg.Encode(buffer, img, nil); err != nil {
+			log.Fatal("unable to encode image.")
+		}
+
+		return c.Blob(http.StatusOK, "image/jpeg", buffer.Bytes())
 	})
 
 	e.Logger.Fatal(e.Start(":1235"))
