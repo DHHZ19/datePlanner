@@ -3,7 +3,7 @@ import "./App.css";
 
 function App() {
   const [query, setQuery] = useState("");
-  const [searchResponse, setSearchResponse] = useState(null);
+  const [searchResponse, setSearchResponse] = useState('');
 
   const [data, setData] = useState(null);
   useEffect(() => {
@@ -19,9 +19,9 @@ function App() {
   async function handleClick() {
     console.log("button clicke");
     const res = await fetch(`http://localhost:1235/search?name=${query}`);
-    const json = await res.json();
-
-    setSearchResponse(json);
+    const blob = await res.blob();
+    const imageUrl = URL.createObjectURL(blob);
+    setSearchResponse(imageUrl);
   }
   return (
     <>
@@ -48,11 +48,7 @@ function App() {
           <a onClick={handleClick}> button</a>
         </button>
         <div>
-          {searchResponse ? (
-            <div>{searchResponse.Results[0].name} </div>
-          ) : (
-            <div> nothing to show</div>
-          )}
+          <img src={searchResponse}></img>
         </div>
       </div>
       <p className="read-the-docs">
