@@ -3,6 +3,8 @@ package main
 import (
 	"bytes"
 	"context"
+	"encoding/base64"
+	"encoding/json"
 	"image/jpeg"
 	"net/http"
 	"os"
@@ -119,7 +121,21 @@ func main() {
 			log.Fatal("unable to encode image.")
 		}
 
-		return c.Blob(http.StatusOK, "image/jpeg", buffer.Bytes())
+		str := base64.StdEncoding.EncodeToString(buffer.Bytes())
+
+		type some struct {
+			Name  string
+			Image string
+		}
+
+		data := some{Name: t.Results[0].Name, Image: str}
+
+		j, err := json.Marshal(data)
+		if err != nil {
+			panic(err)
+		}
+
+		return c.JSON(http.StatusOK, string(j))
 	})
 
 	e.Logger.Fatal(e.Start(":1235"))

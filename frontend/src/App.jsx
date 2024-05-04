@@ -19,9 +19,11 @@ function App() {
   async function handleClick() {
     console.log("button clicke");
     const res = await fetch(`http://localhost:1235/search?name=${query}`);
-    const blob = await res.blob();
-    const imageUrl = URL.createObjectURL(blob);
-    setSearchResponse(imageUrl);
+    const json = await res.json();
+
+    const jsonData = JSON.parse(json)
+
+    setSearchResponse(jsonData);
   }
   return (
     <>
@@ -48,7 +50,8 @@ function App() {
           <a onClick={handleClick}> button</a>
         </button>
         <div>
-          <img src={searchResponse}></img>
+          <span>{searchResponse.Name}</span>
+          <img src={`data:image/jpg;base64,${searchResponse.Image}`}></img>
         </div>
       </div>
       <p className="read-the-docs">
