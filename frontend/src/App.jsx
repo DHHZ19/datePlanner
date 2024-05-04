@@ -45,13 +45,18 @@ function App() {
           <input value={query} onChange={(e) => setQuery(e.target.value)} />
           {query}
         </label>
-
         <button>
           <a onClick={handleClick}> button</a>
         </button>
         <div>
-          <span>{searchResponse.Name}</span>
-          <img src={`data:image/jpg;base64,${searchResponse.Image}`}></img>
+          {searchResponse ? searchResponse.Places?.map((item, idx) => (
+            <>
+            <h3 key={idx}>{item?.Name}</h3>
+            <img src={`data:image/jpg;base64,${item?.Image}`}/>
+            </>
+          )):
+          <div> no data</div>
+          }
         </div>
       </div>
       <p className="read-the-docs">
