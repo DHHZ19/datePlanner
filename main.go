@@ -117,7 +117,8 @@ func main() {
 
 				img, err := photo.Image()
 				if err != nil {
-					log.Fatalf("Fatal Error: %s", err)
+					fmt.Printf("Fatal Error: %s", err)
+					continue
 				}
 
 				buffer := new(bytes.Buffer)

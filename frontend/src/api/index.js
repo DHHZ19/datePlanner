@@ -1,3 +1,1 @@
-resp = fetch("localhost://1234")
-
-
+resp = fetch("localhost://1234");
