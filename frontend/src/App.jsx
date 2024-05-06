@@ -69,12 +69,9 @@ function App() {
           handlePrevClick={handlePrevClick}
         />
         <button>
-          <a onClick={handleClick}> button</a>
+          <a onClick={handleClick}>Search</a>
         </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   );
 }
