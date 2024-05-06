@@ -56,8 +56,9 @@ function App() {
         )} */}
 
         <label>
-          Search albums:
+          Search Resturants:
           <input value={query} onChange={(e) => setQuery(e.target.value)} />
+          <br />
           {query}
         </label>
 
