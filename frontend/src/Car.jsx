@@ -5,14 +5,17 @@ export default function Car({
   handlePrevClick,
 }) {
   return (
-    <div>
+    <div className="">
       {searchResponse ? (
         <>
           <h3 key={placeIdx}>{searchResponse.Places[placeIdx].Name}</h3>
+          <button className="" onClick={handlePrevClick}>
+            Prev
+          </button>
           <img
+            className="p-2"
             src={`data:image/jpg;base64,${searchResponse.Places[placeIdx].Image}`}
           />
-          <button onClick={handlePrevClick}>Prev</button>
           <button onClick={handleNextClick}>Next</button>
         </>
       ) : (
