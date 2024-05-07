@@ -4,5 +4,5 @@ import tailwindConfig from "./tailwind.config";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindConfig()],
+  plugins: [react(), tailwindConfig],
 });
