@@ -18,125 +18,137 @@ import (
 	"googlemaps.github.io/maps"
 )
 
+var (
+	KEY string
+)
+
 func init() {
 
 	err := godotenv.Load(".env")
-
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+
+	KEY = os.Getenv("KEY")
+}
+
+func getAllData(c echo.Context) error {
+
+	z, err := maps.NewClient(maps.WithAPIKey(KEY))
+	if err != nil {
+		log.Fatalf("fatal error: %s", err)
+	}
+
+	r := &maps.GeolocationRequest{ConsiderIP: true}
+
+	route, err := z.Geolocate(context.Background(), r)
+	if err != nil {
+		log.Fatalf("fatal error: %s", err)
+	}
+
+	s := &maps.NearbySearchRequest{Location: &route.Location, Radius: 5000, Type: "restaurant"}
+
+	ts := &maps.TextSearchRequest{Query: "asian_restaurants", Location: &route.Location, Radius: 4000}
+
+	t, err := z.TextSearch(context.Background(), ts)
+	if err != nil {
+		log.Error(err)
+	}
+
+	quess, err := z.NearbySearch(context.Background(), s)
+	if err != nil {
+		log.Error(err)
+	}
+
+	pretty.Println(quess)
+	pretty.Println(t)
+
+	return c.JSON(http.StatusOK, t)
+
+}
+func getRestaurants(c echo.Context) error {
+
+	name := c.QueryParam("name")
+
+	z, err := maps.NewClient(maps.WithAPIKey(KEY))
+	if err != nil {
+		panic(err)
+	}
+
+	r := &maps.GeolocationRequest{ConsiderIP: true}
+
+	route, err := z.Geolocate(context.Background(), r)
+	if err != nil {
+		log.Fatalf("fatal error: %s", err)
+	}
+
+	ts := &maps.TextSearchRequest{Query: name, Location: &route.Location, Radius: 3000}
+
+	t, err := z.TextSearch(context.Background(), ts)
+	if err != nil {
+		log.Error(err)
+	}
+
+	type Place struct {
+		Name  string `json:"Name"`
+		Image string `json:"Image"`
+	}
+
+	type PlacesData struct {
+		Places []*Place `json:"Places"`
+	}
+
+	var pls []*Place
+	for i := 0; i < len(t.Results); i++ {
+		fmt.Println()
+		if t.Results[i].Photos != nil {
+
+			p := &maps.PlacePhotoRequest{PhotoReference: t.Results[i].Photos[0].PhotoReference, MaxHeight: 200, MaxWidth: 200}
+
+			photo, err := z.PlacePhoto(context.Background(), p)
+			if err != nil {
+				log.Fatalf("Fatal Error: %s", err)
+			}
+
+			img, err := photo.Image()
+			if err != nil {
+				fmt.Printf("Fatal Error: %s", err)
+				continue
+			}
+
+			buffer := new(bytes.Buffer)
+			if err := jpeg.Encode(buffer, img, nil); err != nil {
+				log.Fatal("unable to encode image.")
+			}
+			str := base64.StdEncoding.EncodeToString(buffer.Bytes())
+			encodedImage := str
+			pls = append(pls, &Place{Name: t.Results[i].Name, Image: encodedImage})
+		}
+	}
+
+	data, _ := json.Marshal(PlacesData{Places: pls})
+	fmt.Printf("%s\n", data)
+
+	return c.JSON(http.StatusOK, string(data))
 }
 
 func main() {
-	key := os.Getenv("KEY")
-
 	e := echo.New()
 
+	// Middleware
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
+	e.Use(middleware.Logger())
+	// comment out not sure what it does but seems self expanatory
+	// e.Use(middleware.Recover())
 
-	e.GET("/", func(c echo.Context) error {
+	// Routes
+	e.GET("/", getAllData)
+	e.GET("/search", getRestaurants)
 
-		z, err := maps.NewClient(maps.WithAPIKey(key))
-		if err != nil {
-			log.Fatalf("fatal error: %s", err)
-		}
-
-		r := &maps.GeolocationRequest{ConsiderIP: true}
-
-		route, err := z.Geolocate(context.Background(), r)
-		if err != nil {
-			log.Fatalf("fatal error: %s", err)
-		}
-
-		s := &maps.NearbySearchRequest{Location: &route.Location, Radius: 5000, Type: "restaurant"}
-
-		ts := &maps.TextSearchRequest{Query: "asian_restaurants", Location: &route.Location, Radius: 4000}
-
-		t, err := z.TextSearch(context.Background(), ts)
-		if err != nil {
-			log.Error(err)
-		}
-
-		quess, err := z.NearbySearch(context.Background(), s)
-		if err != nil {
-			log.Error(err)
-		}
-
-		pretty.Println(quess)
-		pretty.Println(t)
-
-		return c.JSON(http.StatusOK, t)
-
-	})
-
-	e.GET("/search", func(c echo.Context) error {
-		name := c.QueryParam("name")
-
-		z, err := maps.NewClient(maps.WithAPIKey(key))
-		if err != nil {
-			panic(err)
-		}
-
-		r := &maps.GeolocationRequest{ConsiderIP: true}
-
-		route, err := z.Geolocate(context.Background(), r)
-		if err != nil {
-			log.Fatalf("fatal error: %s", err)
-		}
-
-		ts := &maps.TextSearchRequest{Query: name, Location: &route.Location, Radius: 3000}
-
-		t, err := z.TextSearch(context.Background(), ts)
-		if err != nil {
-			log.Error(err)
-		}
-
-		type Place struct {
-			Name  string `json:"Name"`
-			Image string `json:"Image"`
-		}
-
-		type PlacesData struct {
-			Places []*Place `json:"Places"`
-		}
-
-		var pls []*Place
-		for i := 0; i < len(t.Results); i++ {
-			fmt.Println()
-			if t.Results[i].Photos != nil {
-
-				p := &maps.PlacePhotoRequest{PhotoReference: t.Results[i].Photos[0].PhotoReference, MaxHeight: 200, MaxWidth: 200}
-
-				photo, err := z.PlacePhoto(context.Background(), p)
-				if err != nil {
-					log.Fatalf("Fatal Error: %s", err)
-				}
-
-				img, err := photo.Image()
-				if err != nil {
-					fmt.Printf("Fatal Error: %s", err)
-					continue
-				}
-
-				buffer := new(bytes.Buffer)
-				if err := jpeg.Encode(buffer, img, nil); err != nil {
-					log.Fatal("unable to encode image.")
-				}
-				str := base64.StdEncoding.EncodeToString(buffer.Bytes())
-				encodedImage := str
-				pls = append(pls, &Place{Name: t.Results[i].Name, Image: encodedImage})
-			}
-		}
-
-		data, _ := json.Marshal(PlacesData{Places: pls})
-		fmt.Printf("%s\n", data)
-
-		return c.JSON(http.StatusOK, string(data))
-	})
-
+	// Start server
 	e.Logger.Fatal(e.Start(":1235"))
 
 }
