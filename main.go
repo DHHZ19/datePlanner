@@ -82,7 +82,7 @@ func getRestaurants(c echo.Context) error {
 		log.Fatalf("fatal error: %s", err)
 	}
 
-	ts := &maps.TextSearchRequest{Query: name, Location: &route.Location, Radius: 3000}
+	ts := &maps.TextSearchRequest{Query: name, Location: &route.Location, Radius: 3000, Type: "restaurant"}
 
 	t, err := z.TextSearch(context.Background(), ts)
 	if err != nil {
@@ -140,7 +140,9 @@ func main() {
 		AllowOrigins: []string{"*"},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
+
 	e.Use(middleware.Logger())
+
 	// comment out not sure what it does but seems self expanatory
 	// e.Use(middleware.Recover())
 
