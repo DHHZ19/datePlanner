@@ -1,11 +1,13 @@
 import { useState } from "react";
 import "./App.css";
 import Car from "./Car";
+import SelectedResults from "./SelectedResults";
 
 function App() {
   const [query, setQuery] = useState("");
   const [searchResponse, setSearchResponse] = useState(null);
   const [placeIdx, setPlaceIdx] = useState(0);
+  const [selectedResults, setSelectedResults] = useState([]);
 
   // const [data, setData] = useState(null);
   // useEffect(() => {
@@ -40,37 +42,44 @@ function App() {
       setPlaceIdx(placeIdx - 1);
     }
   }
+
+  function handleSelectedclick() {
+    setSelectedResults([
+      ...selectedResults,
+      {
+        Name: searchResponse.Places[placeIdx].Name,
+        Image: searchResponse.Places[placeIdx].Image,
+      },
+    ]);
+  }
   return (
     <>
       <div></div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        {/* {data ? (
-          <ul>
-            {data.Results.map((item) => (
-              <li key={item.place_id}>{`Name: ${item.name}`}</li>
-            ))}
-          </ul>
-        ) : (
-          <div>Loading...</div>
-        )} */}
-
-        <label>
-          Search Resturants:
-          <input value={query} onChange={(e) => setQuery(e.target.value)} />
-          <br />
-          {query}
-        </label>
-
-        <Car
-          searchResponse={searchResponse}
-          placeIdx={placeIdx}
-          handleNextClick={handleNextClick}
-          handlePrevClick={handlePrevClick}
-        />
-        <button>
-          <a onClick={handleClick}>Search</a>
-        </button>
+      <h1>Date Planner</h1>
+      <span>Plan better dates ❤️</span>
+      <div className="grid grid-cols-4 gap-1 mt-10">
+        <div className="col-span-3">
+          <label>
+            Search Resturants:
+            <input
+              className="px-1 mx-1"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <br />
+          </label>
+          <Car
+            searchResponse={searchResponse}
+            placeIdx={placeIdx}
+            handleNextClick={handleNextClick}
+            handlePrevClick={handlePrevClick}
+            handleSelectedClick={handleSelectedclick}
+          />
+          <button>
+            <a onClick={handleClick}>Search</a>
+          </button>
+        </div>
+        <SelectedResults selectedResults={selectedResults} />
       </div>
     </>
   );
