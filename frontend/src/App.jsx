@@ -21,7 +21,6 @@ function App() {
   //   setData(json);
   // }
   async function handleClick() {
-    console.log("button clicke");
     const res = await fetch(`http://localhost:1235/search?name=${query}`);
     const json = await res.json();
 
@@ -32,6 +31,9 @@ function App() {
   }
 
   function handleNextClick() {
+    if (placeIdx + 1 >= searchResponse.Places.length) {
+      setPlaceIdx(0);
+    }
     setPlaceIdx(placeIdx + 1);
   }
 
