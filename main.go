@@ -66,6 +66,7 @@ func getAllData(c echo.Context) error {
 	return c.JSON(http.StatusOK, t)
 
 }
+
 func getRestaurants(c echo.Context) error {
 
 	name := c.QueryParam("name")
