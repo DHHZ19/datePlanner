@@ -18,6 +18,7 @@ export default function Car({
             </h3>
             <img
               className="p-2"
+              alt={searchResponse.Places[placeIdx].Name}
               src={`data:image/jpg;base64,${searchResponse.Places[placeIdx].Image}`}
             />
           </div>

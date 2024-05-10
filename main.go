@@ -101,7 +101,6 @@ func getRestaurants(c echo.Context) error {
 
 	var pls []*Place
 	for i := 0; i < len(t.Results); i++ {
-		fmt.Println()
 		if t.Results[i].Photos != nil {
 
 			p := &maps.PlacePhotoRequest{PhotoReference: t.Results[i].Photos[0].PhotoReference, MaxHeight: 200, MaxWidth: 200}
