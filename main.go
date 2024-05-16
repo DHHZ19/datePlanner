@@ -99,8 +99,8 @@ func getRestaurants(c echo.Context) error {
 		Places []*Place `json:"Places"`
 	}
 
-	var pls []*Place // an array of place sctructs
- 	for i := 0; i < len(t.Results); i++ {
+	var pls []*Place
+	for i := 0; i < len(t.Results); i++ {
 		if t.Results[i].Photos != nil {
 
 			p := &maps.PlacePhotoRequest{PhotoReference: t.Results[i].Photos[0].PhotoReference, MaxHeight: 200, MaxWidth: 200}
@@ -122,7 +122,6 @@ func getRestaurants(c echo.Context) error {
 			}
 			str := base64.StdEncoding.EncodeToString(buffer.Bytes())
 			encodedImage := str
-			fmt.Println(pls)
 			pls = append(pls, &Place{Name: t.Results[i].Name, Image: encodedImage})
 		}
 	}
