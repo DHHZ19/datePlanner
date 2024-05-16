@@ -99,7 +99,7 @@ func getRestaurants(c echo.Context) error {
 		Places []*Place `json:"Places"`
 	}
 
-	var pls []*Place
+	var pls []*Place // an array of places structs
 	for i := 0; i < len(t.Results); i++ {
 		if t.Results[i].Photos != nil {
 
