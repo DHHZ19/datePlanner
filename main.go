@@ -69,7 +69,7 @@ func getAllData(c echo.Context) error {
 
 func getRestaurants(c echo.Context) error {
 
-	name := c.QueryParam("name")
+	restaurant := c.QueryParam("restaurant")
 
 	z, err := maps.NewClient(maps.WithAPIKey(KEY))
 	if err != nil {
@@ -83,7 +83,7 @@ func getRestaurants(c echo.Context) error {
 		log.Fatalf("fatal error: %s", err)
 	}
 
-	ts := &maps.TextSearchRequest{Query: name, Location: &route.Location, Radius: 3000, Type: "restaurant"}
+	ts := &maps.TextSearchRequest{Query: restaurant, Location: &route.Location, Radius: 2000, Type: "restaurant"}
 
 	t, err := z.TextSearch(context.Background(), ts)
 	if err != nil {
@@ -91,8 +91,11 @@ func getRestaurants(c echo.Context) error {
 	}
 
 	type Place struct {
-		Name  string `json:"Name"`
-		Image string `json:"Image"`
+		Name       string  `json:"Name"`
+		Image      string  `json:"Image"`
+		PlaceID    string  `json:"PlaceID"`
+		PriceLevel int     `json:"PriceLevel"`
+		Rating     float32 `json:"Rating"`
 	}
 
 	type PlacesData struct {
@@ -122,12 +125,12 @@ func getRestaurants(c echo.Context) error {
 			}
 			str := base64.StdEncoding.EncodeToString(buffer.Bytes())
 			encodedImage := str
-			pls = append(pls, &Place{Name: t.Results[i].Name, Image: encodedImage})
+			pls = append(pls, &Place{Name: t.Results[i].Name, Image: encodedImage, PlaceID: t.Results[i].PlaceID, PriceLevel: t.Results[i].PriceLevel, Rating: t.Results[i].Rating})
 		}
 	}
 
 	data, _ := json.Marshal(PlacesData{Places: pls})
-	fmt.Printf("%s\n", data)
+	//fmt.Printf("%s\n", data)
 
 	return c.JSON(http.StatusOK, string(data))
 }
