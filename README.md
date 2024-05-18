@@ -1,4 +1,4 @@
-# This is a date planner application
+# This is a date planner application 🌠
 
 _Plan better dates with your partner_
 
