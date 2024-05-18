@@ -129,7 +129,7 @@ func getRestaurants(c echo.Context) error {
 	}
 
 	data, _ := json.Marshal(PlacesData{Places: pls})
-	//fmt.Printf("%s\n", data)
+	//pretty.Printf("%s\n", data)
 
 	return c.JSON(http.StatusOK, string(data))
 }
