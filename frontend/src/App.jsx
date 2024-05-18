@@ -21,7 +21,7 @@ function App() {
   //   setData(json);
   // }
   async function handleClick() {
-    const res = await fetch(`http://localhost:1235/search?resturant=${query}`);
+    const res = await fetch(`http://localhost:1235/search?restaurant=${query}`);
     const json = await res.json();
 
     const jsonData = JSON.parse(json);
