@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"image/jpeg"
 	"net/http"
 	"os"
@@ -115,7 +114,7 @@ func getRestaurants(c echo.Context) error {
 
 			img, err := photo.Image()
 			if err != nil {
-				fmt.Printf("Fatal Error: %s", err)
+				log.Fatalf("Fatal Error: %s", err)
 				continue
 			}
 
