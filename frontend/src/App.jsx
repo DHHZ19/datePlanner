@@ -36,7 +36,7 @@ function App() {
     for (let i = 0; i < selectedResults.length; i++) {
       if (
         Object.values(selectedResults[i]).includes(
-          searchResponse.Places[placeIdx].PlaceID,
+          searchResponse.Places[placeIdx].PlaceID
         )
       ) {
         return;
