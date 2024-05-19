@@ -56,8 +56,8 @@ function App() {
     <div className="flex justify-center flex-col">
       <h1 className="text-center">Date Planner</h1>
       <span className="text-center">Plan better dates ❤️</span>
-      <div className="sm:grid sm:grid-cols-6 sm:gap-1 mt-10">
-        <div className="sm:col-start-2 sm:col-span-4 text-center">
+      <div className="sm:grid sm:grid-cols-8 sm:gap-1 mt-10">
+        <div className="sm:col-start-3 sm:col-span-4 text-center">
           <label>
             Search Resturants:
             <input
@@ -78,10 +78,7 @@ function App() {
             <a onClick={handleClick}>Search</a>
           </button>
         </div>
-        <SelectedResults
-          className="sm:col-end-8 sm:col-span-2"
-          selectedResults={selectedResults}
-        />
+        <SelectedResults selectedResults={selectedResults} />
       </div>
     </div>
   );

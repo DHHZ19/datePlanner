@@ -1,6 +1,6 @@
 export default function SelectedResults({ selectedResults }) {
   return (
-    <div className="flex flex-col text-center px-2">
+    <div className="flex flex-col text-center px-2 sm:col-start-7 sm:col-span-2">
       <h3 className="font-bold font-sans text-xl">Selected Resturants: </h3>
       {selectedResults.map((child) => (
         <div key={child.PlaceID} className="flex items-center flex-col">
