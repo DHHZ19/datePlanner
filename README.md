@@ -14,7 +14,7 @@ Overview: selects restaurant, dessert, activity, bar. Then allows to share the p
 
 [   ] Update React frontend to be `add cards to choose from a food type` 
 
-[   ] Update React frontend to be `add ability to receive ` 
+[   ] Update React frontend to be `add ability to choose activity for date` 
 
 ## Eventual Features/UI Updates:
 
