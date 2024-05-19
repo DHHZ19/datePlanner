@@ -121,6 +121,7 @@ func getRestaurants(c echo.Context) error {
 			if err := jpeg.Encode(buffer, img, nil); err != nil {
 				log.Fatal("unable to encode image.")
 			}
+
 			str := base64.StdEncoding.EncodeToString(buffer.Bytes())
 			encodedImage := str
 			pls = append(pls, &Place{Name: t.Results[i].Name, Image: encodedImage, PlaceID: t.Results[i].PlaceID, PriceLevel: t.Results[i].PriceLevel, Rating: t.Results[i].Rating})
