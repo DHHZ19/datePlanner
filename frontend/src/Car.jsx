@@ -13,8 +13,25 @@ export default function Car({
             Prev
           </button>
           <div className="bg-blue-400" onClick={handleSelectedClick}>
-            <h3 key={placeIdx} className="font-semibold text-black">
-              {searchResponse.Places[placeIdx].Name}
+            <h3
+              key={searchResponse.Places[placeIdx]}
+              className="font-semibold text-black"
+            >
+              Name: {searchResponse.Places[placeIdx].Name}
+              <br />
+              Rating: {searchResponse.Places[placeIdx].Rating}
+              <br />
+              Price Level:
+              {console.log(searchResponse.Places[placeIdx].PriceLevel)}
+              {searchResponse.Places[placeIdx].PriceLevel === 1
+                ? "$"
+                : searchResponse.Places[placeIdx].PriceLevel === 2
+                ? "$$"
+                : searchResponse.Places[placeIdx].PriceLevel === 3
+                ? "$$$"
+                : searchResponse.Places[placeIdx].PriceLevel === 4
+                ? "$$$$"
+                : ""}
             </h3>
             <img
               className="p-2"

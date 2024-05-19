@@ -24,33 +24,47 @@ function App() {
     const res = await fetch(`http://localhost:1235/search?restaurant=${query}`);
     const json = await res.json();
 
-    const jsonData = JSON.parse(json);
+    //  const jsonData = JSON.parse(json);
 
-    setSearchResponse(jsonData);
-    console.log(searchResponse);
+    setSearchResponse(json);
+    console.log(searchResponse, "search response");
   }
 
   function handleNextClick() {
     if (placeIdx + 1 >= searchResponse.Places.length) {
       setPlaceIdx(0);
+    } else {
+      setPlaceIdx(placeIdx + 1);
     }
-    setPlaceIdx(placeIdx + 1);
   }
 
   function handlePrevClick() {
-    if (placeIdx < 2) {
-      setPlaceIdx(0);
+    if (placeIdx <= 0) {
+      setPlaceIdx(searchResponse.Places.length - 1);
     } else {
       setPlaceIdx(placeIdx - 1);
     }
   }
 
   function handleSelectedclick() {
+    console.log(selectedResults);
+
+    for (let i = 0; i < selectedResults.length; i++) {
+      if (
+        Object.values(selectedResults[i]).includes(
+          searchResponse.Places[placeIdx].PlaceID
+        )
+      ) {
+        return;
+      }
+    }
+
     setSelectedResults([
       ...selectedResults,
       {
         Name: searchResponse.Places[placeIdx].Name,
         Image: searchResponse.Places[placeIdx].Image,
+        PlaceID: searchResponse.Places[placeIdx].PlaceID,
       },
     ]);
   }
