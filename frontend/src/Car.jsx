@@ -46,7 +46,7 @@ export default function Car({
           </button>
         </>
       ) : (
-        <div>no data</div>
+        <div></div>
       )}
     </div>
   );
