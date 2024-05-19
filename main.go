@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/base64"
-	"encoding/json"
 	"image/jpeg"
 	"net/http"
 	"os"
@@ -114,7 +113,7 @@ func getRestaurants(c echo.Context) error {
 
 			img, err := photo.Image()
 			if err != nil {
-				log.Fatalf("Fatal Error: %s", err)
+				log.Errorf("Fatal Error: %s", err) // should be fatal but keep it errorf to keep program running
 				continue
 			}
 
@@ -127,11 +126,9 @@ func getRestaurants(c echo.Context) error {
 			pls = append(pls, &Place{Name: t.Results[i].Name, Image: encodedImage, PlaceID: t.Results[i].PlaceID, PriceLevel: t.Results[i].PriceLevel, Rating: t.Results[i].Rating})
 		}
 	}
-
-	data, _ := json.Marshal(PlacesData{Places: pls})
 	//pretty.Printf("%s\n", data)
 
-	return c.JSON(http.StatusOK, string(data))
+	return c.JSON(http.StatusOK, PlacesData{Places: pls})
 }
 
 func main() {
@@ -142,9 +139,7 @@ func main() {
 		AllowOrigins: []string{"*"},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
-
 	e.Use(middleware.Logger())
-
 	// comment out not sure what it does but seems self expanatory
 	// e.Use(middleware.Recover())
 
@@ -152,7 +147,5 @@ func main() {
 	e.GET("/", getAllData)
 	e.GET("/search", getRestaurants)
 
-	// Start server
 	e.Logger.Fatal(e.Start(":1235"))
-
 }

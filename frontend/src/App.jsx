@@ -9,25 +9,11 @@ function App() {
   const [placeIdx, setPlaceIdx] = useState(0);
   const [selectedResults, setSelectedResults] = useState([]);
 
-  // const [data, setData] = useState(null);
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
-  // async function fetchData() {
-  //   const response = await fetch("http://localhost:1235/");
-  //   const json = await response.json();
-
-  //   setData(json);
-  // }
   async function handleClick() {
     const res = await fetch(`http://localhost:1235/search?restaurant=${query}`);
     const json = await res.json();
 
-    //  const jsonData = JSON.parse(json);
-
     setSearchResponse(json);
-    console.log(searchResponse, "search response");
   }
 
   function handleNextClick() {
@@ -47,8 +33,6 @@ function App() {
   }
 
   function handleSelectedclick() {
-    console.log(selectedResults);
-
     for (let i = 0; i < selectedResults.length; i++) {
       if (
         Object.values(selectedResults[i]).includes(
