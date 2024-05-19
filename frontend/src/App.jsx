@@ -57,7 +57,7 @@ function App() {
       <h1 className="text-center">Date Planner</h1>
       <span className="text-center">Plan better dates ❤️</span>
       <div className="sm:grid sm:grid-cols-8 sm:gap-1 mt-10">
-        <div className="sm:col-start-3 sm:col-span-5 text-center">
+        <div className="sm:col-start-3 sm:col-span-4 text-center">
           <label>
             Search Resturants:
             <input
