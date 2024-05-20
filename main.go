@@ -139,6 +139,7 @@ func main() {
 		AllowOrigins: []string{"*"},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
+
 	e.Use(middleware.Logger())
 	// comment out not sure what it does but seems self expanatory
 	// e.Use(middleware.Recover())
