@@ -1,7 +1,9 @@
-export default function PreferenceTypeTitle({ props }) {
+export default function PreferenceTypeTitle({ props, nextPreferenceType }) {
   return (
     <div className="flex basis-4 gap-8 mt-10">
-      <span>{props.PreferenceType[0].PreferenceTypeTitle}</span>
+      <span>
+        {props.PreferenceType[nextPreferenceType].PreferenceTypeTitle}
+      </span>
     </div>
   );
 }
