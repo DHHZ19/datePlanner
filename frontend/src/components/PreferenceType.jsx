@@ -1,7 +1,14 @@
-export default function PreferenceType() {
+export default function PreferenceType({ props }) {
   return (
     <div className="flex basis-4 gap-8 mt-10">
-      <h1>hello</h1>
+      {props.PreferenceType[1].PreferenceTypes.map((x, idx) => (
+        <div
+          className={"min-w-fit w-11 rounded-lg bg-blue-400 p-2 shadow-xl"}
+          key={idx}
+        >
+          <span key={idx}>{x.title}</span>
+        </div>
+      ))}
     </div>
   );
 }

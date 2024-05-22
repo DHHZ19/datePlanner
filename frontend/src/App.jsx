@@ -2,8 +2,8 @@ import { useState } from "react";
 import "./App.css";
 import Car from "./Car";
 import SelectedResults from "./SelectedResults";
-import data from "./json.json";
-import PreferenceTypeTitle from "./components/PreferenceTypeTitle";
+import data from "./data.json";
+import SelectablePreferenceType from "./components/SelectablePreferenceType";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -82,7 +82,7 @@ function App() {
         </div>
         <SelectedResults selectedResults={selectedResults} />
       </div>
-      <PreferenceTypeTitle props={data} />
+      <SelectablePreferenceType props={data} />
     </div>
   );
 }
