@@ -3,7 +3,7 @@
     {
       "PreferenceTypeTitle": "Resturant",
       "PreferenceTypes": [
-        { "title": "Mexican", "url": "https://google.com" },
+        { "title": "Mexican", "url": "https://example.com" },
         { "title": "Indian", "url": "https://google.com" }
       ]
     },
