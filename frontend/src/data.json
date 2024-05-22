@@ -1,0 +1,30 @@
+{
+  "PreferenceType": [
+    {
+      "PreferenceTypeTitle": "Resturant",
+      "PreferenceTypes": [
+        { "title": "Mexican", "url": "https://google.com" },
+        { "title": "Indian", "url": "https://google.com" }
+      ]
+    },
+    {
+      "PreferenceTypeTitle": "Dessert",
+      "PreferenceTypes": [{ "title": "Ice Cream", "url": "https://google.com" }]
+    },
+
+    {
+      "PreferenceTypeTitle": "Acivity",
+      "PreferenceTypes": [
+        { "title": "Golf", "url": "https://google.com" },
+        { "title": "Club", "url": "https://google.com" }
+      ]
+    },
+    {
+      "PreferenceTypeTitle": "Adult Rec",
+      "PreferenceTypes": [
+        { "title": "Dispensary", "url": "https://google.com" },
+        { "title": "Brewery", "url": "https://google.com" }
+      ]
+    }
+  ]
+}
