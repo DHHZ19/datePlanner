@@ -63,7 +63,7 @@ function App() {
           <label>
             Search Resturants:
             <input
-              className="px-1 mx-1"
+              className="px-2 mx-1"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
