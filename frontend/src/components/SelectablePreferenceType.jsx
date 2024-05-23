@@ -6,7 +6,7 @@ import DeatilsOnPreference from "./DetailsOnPreference";
 export default function SelectablePreferenceType({ props }) {
   const [nextPreferenceType, setNextPreferenceType] = useState(0);
   const [showDetails, setShowDeatils] = useState(false);
-  const [showTest, setShowtest] = useState(""); // sets the search type i.e like mexican resturant
+  const [showTest, setShowtest] = useState(""); // sets the search type i.e like mexican resturant - see comment in prefereceType component
 
   function handleClick() {
     if (nextPreferenceType + 1 >= props.PreferenceType.length) {
