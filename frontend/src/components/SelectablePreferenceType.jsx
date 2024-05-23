@@ -9,9 +9,6 @@ export default function SelectablePreferenceType({ props }) {
   const [showTest, setShowtest] = useState(""); // sets the search type i.e like mexican resturant
 
   function handleClick() {
-    if (showDetails) {
-      return;
-    }
     if (nextPreferenceType + 1 >= props.PreferenceType.length) {
       setNextPreferenceType(0);
     } else {
@@ -43,9 +40,13 @@ export default function SelectablePreferenceType({ props }) {
           setShowTest={setShowtest}
         />
       )}
-      <button onClick={handleClick} className="mt-5">
-        Select Next Preference
-      </button>
+      {!showDetails ? (
+        <button onClick={handleClick} className="mt-5">
+          Select Next Preference
+        </button>
+      ) : (
+        <div> </div>
+      )}
     </div>
   );
 }
