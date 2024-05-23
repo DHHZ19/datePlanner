@@ -11,7 +11,7 @@ export default function PreferenceType({
           <div
             className={"min-w-fit w-11 rounded-lg bg-slate-900 p-2 shadow-xl"}
             key={idx}
-            onClick={() => setShowTest(x.title)}
+            onClick={() => setShowTest(x.title)} // should instead use json data for realability
           >
             <a className="w-full" onClick={handleShowDetails}>
               <span key={idx}>{x.title}</span>
