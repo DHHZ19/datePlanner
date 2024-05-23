@@ -6,9 +6,12 @@ import DeatilsOnPreference from "./DetailsOnPreference";
 export default function SelectablePreferenceType({ props }) {
   const [nextPreferenceType, setNextPreferenceType] = useState(0);
   const [showDetails, setShowDeatils] = useState(false);
-  const [showTest, setShowtest] = useState("");
+  const [showTest, setShowtest] = useState(""); // sets the search type i.e like mexican resturant
 
   function handleClick() {
+    if (showDetails) {
+      return;
+    }
     if (nextPreferenceType + 1 >= props.PreferenceType.length) {
       setNextPreferenceType(0);
     } else {
@@ -28,7 +31,10 @@ export default function SelectablePreferenceType({ props }) {
         props={props}
       />
       {showDetails ? (
-        <DeatilsOnPreference showTest={showTest} />
+        <DeatilsOnPreference
+          showTest={showTest}
+          setShowDeatils={setShowDeatils}
+        />
       ) : (
         <PreferenceType
           nextPreferenceType={nextPreferenceType}

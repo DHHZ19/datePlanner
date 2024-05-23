@@ -4,9 +4,11 @@ export default function Car({
   handleNextClick,
   handlePrevClick,
   handleSelectedClick,
+  setShowDeatils,
 }) {
   return (
     <div className="flex justify-center mt-2">
+      <button onClick={() => setShowDeatils(false)}>go back</button>
       {searchResponse ? (
         <>
           <button className="block" onClick={handlePrevClick}>

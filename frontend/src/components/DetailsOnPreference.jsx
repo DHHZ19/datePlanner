@@ -2,7 +2,7 @@ import { useState } from "react";
 import SelectedResults from "../SelectedResults";
 import Car from "../Car";
 
-export default function DeatilsOnPreference({ showTest }) {
+export default function DeatilsOnPreference({ showTest, setShowDeatils }) {
   const [query, setQuery] = useState("");
   const [searchResponse, setSearchResponse] = useState(null);
   const [placeIdx, setPlaceIdx] = useState(0);
@@ -72,6 +72,7 @@ export default function DeatilsOnPreference({ showTest }) {
           handleNextClick={handleNextClick}
           handlePrevClick={handlePrevClick}
           handleSelectedClick={handleSelectedclick}
+          setShowDeatils={setShowDeatils}
         />
         <button>
           <a onClick={handleClick}>Search</a>
