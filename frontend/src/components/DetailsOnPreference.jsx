@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SelectedResults from "./SelectedResults";
-import Car from "../Car";
+import Car from "./Carousel";
 
 export default function DeatilsOnPreference({ showTest, setShowDeatils }) {
   const [query, setQuery] = useState("");
