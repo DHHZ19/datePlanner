@@ -1,5 +1,5 @@
 import { useState } from "react";
-import SelectedResults from "../SelectedResults";
+import SelectedResults from "./SelectedResults";
 import Car from "../Car";
 
 export default function DeatilsOnPreference({ showTest, setShowDeatils }) {
