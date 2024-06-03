@@ -41,7 +41,7 @@ export default function SelectablePreferenceType({ props }) {
         />
       )}
       {!showDetails ? (
-        <button onClick={handleClick} className="mt-5">
+        <button onClick={handleClick} className="mt-5 hover:cursor-pointer">
           Select Next Preference
         </button>
       ) : (

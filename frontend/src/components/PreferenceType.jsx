@@ -13,7 +13,10 @@ export default function PreferenceType({
             key={idx}
             onClick={() => setShowTest(x.title)} // should instead use json data for realability
           >
-            <a className="w-full" onClick={handleShowDetails}>
+            <a
+              className="w-full hover:cursor-pointer"
+              onClick={handleShowDetails}
+            >
               <span key={idx}>{x.title}</span>
             </a>
           </div>
