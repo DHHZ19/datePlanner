@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SelectedResults from "./SelectedResults";
-import Car from "./Carousel";
+import Carousel from "./Carousel";
 
 export default function DeatilsOnPreference({ showTest, setShowDeatils }) {
   const [query, setQuery] = useState("");
@@ -66,7 +66,7 @@ export default function DeatilsOnPreference({ showTest, setShowDeatils }) {
           />
           <br />
         </label>
-        <Car
+        <Carousel
           searchResponse={searchResponse}
           placeIdx={placeIdx}
           handleNextClick={handleNextClick}
